@@ -1,5 +1,3 @@
-import { firebaseConfig } from '../../config.js'
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -26,6 +24,15 @@ import {
     query,
     getDocs
 } from 'firebase/firestore';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAAhY_9KaRUeaG69jIAY8R12moOSK4R31s",
+    authDomain: "crwn-clothing-db-b3295.firebaseapp.com",
+    projectId: "crwn-clothing-db-b3295",
+    storageBucket: "crwn-clothing-db-b3295.appspot.com",
+    messagingSenderId: "888975699305",
+    appId: "1:888975699305:web:1ca67cfd91682c0bad21f8"
+};
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
