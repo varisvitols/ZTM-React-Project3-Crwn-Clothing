@@ -1,9 +1,9 @@
 import { compose, createStore, applyMiddleware } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-
 import logger from "redux-logger";
 // import { loggerMiddleware } from "../middleware/logger";
+import thunk from "redux-thunk";
 
 import { rootReducer } from "./root-reducer";
 
@@ -16,9 +16,10 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // Middlewares in redux are executed just before they hit the reducers.
-const middleWares = [process.env.NODE_ENV !== "production" && logger].filter(
-  Boolean
-);
+const middleWares = [
+  process.env.NODE_ENV !== "production" && logger,
+  thunk,
+].filter(Boolean);
 // const middleWares = [loggerMiddleware];
 
 const composeEnhancer =
