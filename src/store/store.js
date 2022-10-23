@@ -1,7 +1,7 @@
-import { compose, createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
+import { compose, createStore, applyMiddleware } from "redux";
+import logger from "redux-logger";
 
-import { rootReducer } from './root-reducer';
+import { rootReducer } from "./root-reducer";
 
 // Function generator
 // const curryFunc = (a) => (b, c) => {
@@ -14,18 +14,18 @@ import { rootReducer } from './root-reducer';
 // Middleware is a reusable function
 
 const loggerMiddleware = (store) => (next) => (action) => {
-    if (!action.type) {
-        return next(action);
-    }
+  if (!action.type) {
+    return next(action);
+  }
 
-    console.log('CM:type: ', action.type);
-    console.log('CM:payload: ', action.payload);
-    console.log('CM:currentState: ', store.getState());
+  console.log("CM:type: ", action.type);
+  console.log("CM:payload: ", action.payload);
+  console.log("CM:currentState: ", store.getState());
 
-    next(action);
+  next(action);
 
-    console.log('CM:next state: ', store.getState());
-}
+  console.log("CM:next state: ", store.getState());
+};
 
 // Middlewares in redux are executed just before they hit the reducers.
 // const middleWares = [logger];
