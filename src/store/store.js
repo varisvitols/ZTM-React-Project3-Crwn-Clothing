@@ -1,4 +1,6 @@
 import { compose, createStore, applyMiddleware } from "redux";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import logger from "redux-logger";
 
 import { rootReducer } from "./root-reducer";
@@ -13,25 +15,39 @@ import { rootReducer } from "./root-reducer";
 // with3(2, 4);
 // Middleware is a reusable function
 
-const loggerMiddleware = (store) => (next) => (action) => {
-  if (!action.type) {
-    return next(action);
-  }
+// const loggerMiddleware = (store) => (next) => (action) => {
+//   if (!action.type) {
+//     return next(action);
+//   }
 
-  console.log("CM:type: ", action.type);
-  console.log("CM:payload: ", action.payload);
-  console.log("CM:currentState: ", store.getState());
+//   console.log("CM:type: ", action.type);
+//   console.log("CM:payload: ", action.payload);
+//   console.log("CM:currentState: ", store.getState());
 
-  next(action);
+//   next(action);
 
-  console.log("CM:next state: ", store.getState());
+//   console.log("CM:next state: ", store.getState());
+// };
+
+const persistConfig = {
+  key: "root",
+  storage,
+  blacklist: ["user"],
 };
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 // Middlewares in redux are executed just before they hit the reducers.
-// const middleWares = [logger];
-const middleWares = [loggerMiddleware];
+const middleWares = [logger];
+// const middleWares = [loggerMiddleware];
 
 const composedEnhancers = compose(applyMiddleware(...middleWares));
 
-export const store = createStore(rootReducer, undefined, composedEnhancers);
+export const store = createStore(
+  persistedReducer,
+  undefined,
+  composedEnhancers
+);
 // export const store = createStore(rootReducer);
+
+export const persistor = persistStore(store);
