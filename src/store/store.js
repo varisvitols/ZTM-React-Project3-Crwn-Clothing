@@ -3,7 +3,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import logger from "redux-logger";
 // import { loggerMiddleware } from "../middleware/logger";
-import thunk from "redux-thunk";
+import thunk from "redux-thunk"; // keep redux-thunk in this branch, as main is switching to redux-saga
 
 import { rootReducer } from "./root-reducer";
 
