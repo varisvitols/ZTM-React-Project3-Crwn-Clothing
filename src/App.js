@@ -3,36 +3,21 @@ import { useDispatch } from "react-redux";
 
 import { Routes, Route } from "react-router-dom";
 
-import {
-  createUserDocumentFromAuth,
-  onAuthStateChangedListener,
-} from "./utils/firebase/firebase.utils";
 import Navigation from "./routes/navigation/navigation.component";
 import Home from "./routes/home/home.component";
 import Authentication from "./routes/authentication/authentication.component";
 import Shop from "./routes/shop/shop.component";
 import Checkout from "./routes/checkout/checkout.component";
-import { setCurrentUser } from "./store/user/user.action";
+import { checkUserSession } from "./store/user/user.action";
 
 const App = () => {
   // this is never updated, so no need to include in to the useEffect dependencies
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("useEffect called");
-    const unsubscribe = onAuthStateChangedListener((user) => {
-      // ???
-      console.log("useEffect user", user);
-      if (user) {
-        createUserDocumentFromAuth(user);
-      }
-      // console.log('setCurrentUser before dispatch', setCurrentUser(user))
-      dispatch(setCurrentUser(user));
-      console.log("unsubscribe", user);
-    });
+    dispatch(checkUserSession());
+  }, []);
 
-    return unsubscribe; // how does this work?
-  }, [dispatch]);
   return (
     <Routes>
       <Route path="/" element={<Navigation />}>
